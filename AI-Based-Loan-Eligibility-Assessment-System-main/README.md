@@ -115,9 +115,20 @@ Key variables:
 | `MONGODB_URI` | MongoDB connection string |
 | `JWT_SECRET` | Long random secret for JWT signing |
 | `FRONTEND_URL` | CORS allowed origin |
-| `VITE_API_URL` | Frontend API base URL |
+| `VITE_API_URL` | Optional frontend API base URL; defaults to same-origin `/api` requests |
 
 **Never commit real secrets.**
+
+### Deploying to Vercel
+
+Create the Vercel project from the repository root so `vercel.json` can build the
+`backend` and `frontend` services together. The frontend is served at `/`, and
+requests under `/api/` are routed to the backend. Leave `VITE_API_URL` unset in
+Vercel so the browser uses those same-origin routes.
+
+Configure `MONGODB_URI`, `MONGODB_DB_NAME`, and a strong `JWT_SECRET` for the
+backend service in Vercel. Use a network-accessible managed MongoDB deployment;
+the local in-memory fallback is not persistent and is unsuitable for production.
 
 ---
 
